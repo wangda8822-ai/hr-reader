@@ -307,7 +307,11 @@ const CATEGORIES = {
   culture: { label: "敬业度与文化",  emoji: "🤝" },
 };
 
-const CORS_PROXY = "https://api.rss2json.com/v1/api.json?rss_url=";
+// 多个代理服务，自动切换，提升成功率
+const PROXIES = [
+  { url: "https://api.rss2json.com/v1/api.json?rss_url=", type: "rss2json" },
+  { url: "https://api.allorigins.win/raw?url=", type: "allorigins" },
+];
 
 const DEMO_ARTICLES = [
   { title:"战略人力资源的未来：从行政角色到业务伙伴", source:"哈佛商业评论", category:"theory", color:"#C0392B", icon:"📕", date:new Date(Date.now()-3600000*2), link:"https://hbr.org", snippet:"随着组织面临前所未有的变革，HR 领导者必须从传统行政角色转型为推动组织变革的战略业务伙伴。" },
@@ -371,31 +375,66 @@ function toggleSave(article) {
 }
 
 // ── Fetch ──
+async function fetchFeedViaRss2Json(feed) {
+  const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed.url));
+  const data = await res.json();
+  if (data.status !== "ok" || !data.items) throw new Error("rss2json failed");
+  return data.items.map(item => ({
+    title: item.title,
+    link: item.link,
+    date: new Date(item.pubDate),
+    snippet: stripHtml(item.description || "").slice(0, 220),
+    source: feed.name, category: feed.category, color: feed.color, icon: feed.icon,
+  }));
+}
+
+async function fetchFeedViaAllOrigins(feed) {
+  const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(feed.url));
+  const text = await res.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(text, "text/xml");
+  const items = xml.querySelectorAll("item");
+  if (items.length === 0) {
+    // try Atom format
+    const entries = xml.querySelectorAll("entry");
+    if (entries.length === 0) throw new Error("allorigins: no items");
+    return Array.from(entries).map(e => ({
+      title: e.querySelector("title")?.textContent || "",
+      link: e.querySelector("link")?.getAttribute("href") || e.querySelector("link")?.textContent || "",
+      date: new Date(e.querySelector("updated,published")?.textContent || Date.now()),
+      snippet: stripHtml(e.querySelector("summary,content")?.textContent || "").slice(0, 220),
+      source: feed.name, category: feed.category, color: feed.color, icon: feed.icon,
+    }));
+  }
+  return Array.from(items).map(item => ({
+    title: item.querySelector("title")?.textContent || "",
+    link: item.querySelector("link")?.textContent || "",
+    date: new Date(item.querySelector("pubDate")?.textContent || Date.now()),
+    snippet: stripHtml(item.querySelector("description")?.textContent || "").slice(0, 220),
+    source: feed.name, category: feed.category, color: feed.color, icon: feed.icon,
+  }));
+}
+
+async function fetchSingleFeed(feed) {
+  // 依次尝试多个代理
+  try { return await fetchFeedViaRss2Json(feed); } catch {}
+  try { return await fetchFeedViaAllOrigins(feed); } catch {}
+  return null;
+}
+
 async function fetchFeeds() {
   setState({ loading: true });
   const all = [];
   const status = {};
 
   const promises = RSS_FEEDS.map(async feed => {
-    try {
-      const res = await fetch(CORS_PROXY + encodeURIComponent(feed.url));
-      const data = await res.json();
-      if (data.status === "ok" && data.items) {
-        status[feed.name] = { ok: true, count: data.items.length };
-        data.items.forEach(item => {
-          all.push({
-            title: item.title,
-            link: item.link,
-            date: new Date(item.pubDate),
-            snippet: stripHtml(item.description || "").slice(0, 220),
-            source: feed.name,
-            category: feed.category,
-            color: feed.color,
-            icon: feed.icon,
-          });
-        });
-      } else { status[feed.name] = { ok: false }; }
-    } catch { status[feed.name] = { ok: false }; }
+    const items = await fetchSingleFeed(feed);
+    if (items && items.length > 0) {
+      status[feed.name] = { ok: true, count: items.length };
+      all.push(...items);
+    } else {
+      status[feed.name] = { ok: false };
+    }
   });
 
   await Promise.all(promises);
