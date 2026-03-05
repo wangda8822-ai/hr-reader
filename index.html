@@ -4,584 +4,337 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HR 脉搏阅读器 — 每日人力资源精选</title>
-<meta name="description" content="聚合全球 10 大顶级 HR 博客的最新文章，涵盖 HR 理论、人才管理、科技分析与企业文化。">
+<meta name="description" content="聚合全球 10 大顶级 HR 博客的最新文章，AI 实时翻译为中文。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0B0E11;
-    --bg-header: #141921;
-    --gold: #D4A574;
-    --gold-dark: #8B6F47;
-    --gold-light: #F2DCC4;
-    --text: #E8E6E1;
-    --text-title: #F0EDE8;
-    --text-muted: #7C8290;
-    --text-dim: #6B7280;
-    --text-meta: #9CA3AF;
-    --border: rgba(255,255,255,0.06);
-    --border-light: rgba(255,255,255,0.08);
-    --surface: rgba(255,255,255,0.04);
-    --surface-hover: rgba(255,255,255,0.025);
+    --bg: #0B0E11; --bg-header: #141921;
+    --gold: #D4A574; --gold-dark: #8B6F47; --gold-light: #F2DCC4;
+    --text: #E8E6E1; --text-title: #F0EDE8; --text-muted: #7C8290;
+    --text-dim: #6B7280; --text-meta: #9CA3AF;
+    --border: rgba(255,255,255,0.06); --border-light: rgba(255,255,255,0.08);
+    --surface: rgba(255,255,255,0.04); --surface-hover: rgba(255,255,255,0.025);
     --sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
     --serif: 'Noto Serif SC', Georgia, serif;
   }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { min-height:100vh; background:var(--bg); color:var(--text); font-family:var(--serif); -webkit-font-smoothing:antialiased; }
+  ::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:transparent; } ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:3px; }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  .header { background:linear-gradient(180deg,var(--bg-header) 0%,var(--bg) 100%); border-bottom:1px solid var(--border); padding:28px 0 20px; position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+  .header-inner { max-width:960px; margin:0 auto; padding:0 24px; }
+  .header-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+  .logo-area { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+  .logo-icon { width:38px; height:38px; border-radius:8px; background:linear-gradient(135deg,var(--gold),var(--gold-dark)); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:var(--bg); font-family:var(--sans); }
+  .logo-text { font-size:23px; font-weight:700; font-family:var(--sans); background:linear-gradient(135deg,var(--gold),var(--gold-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:0.02em; }
+  .logo-subtitle { font-size:13px; color:var(--text-dim); font-family:var(--sans); }
+  .header-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
 
-  body {
-    min-height: 100vh;
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--serif);
-    -webkit-font-smoothing: antialiased;
-  }
+  .btn { padding:8px 16px; border-radius:8px; border:1px solid var(--border-light); background:var(--surface); color:var(--text-meta); cursor:pointer; font-size:13px; font-family:var(--sans); font-weight:600; transition:all .2s; white-space:nowrap; }
+  .btn:hover { border-color:rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); }
+  .btn.active { border-color:var(--gold); background:rgba(212,165,116,0.12); color:var(--gold); }
+  .btn:disabled { opacity:0.5; cursor:not-allowed; }
 
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+  .search-wrap { margin-top:18px; position:relative; }
+  .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:16px; color:var(--text-dim); pointer-events:none; }
+  .search-input { width:100%; padding:12px 16px 12px 40px; border-radius:10px; border:1px solid var(--border-light); background:var(--surface); color:var(--text); font-size:14px; font-family:var(--sans); outline:none; transition:border-color .2s; }
+  .search-input:focus { border-color:rgba(212,165,116,0.4); }
+  .search-input::placeholder { color:var(--text-dim); }
 
-  /* Header */
-  .header {
-    background: linear-gradient(180deg, var(--bg-header) 0%, var(--bg) 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 28px 0 20px;
-    position: sticky; top: 0; z-index: 100;
-    backdrop-filter: blur(12px);
-  }
-  .header-inner { max-width: 960px; margin: 0 auto; padding: 0 24px; }
-  .header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .categories { display:flex; gap:6px; margin-top:16px; overflow-x:auto; padding-bottom:4px; }
+  .categories::-webkit-scrollbar { height:0; }
+  .cat-btn { padding:7px 14px; border-radius:20px; border:1px solid var(--border-light); background:transparent; color:var(--text-dim); cursor:pointer; font-size:12px; font-family:var(--sans); font-weight:600; white-space:nowrap; transition:all .2s; display:flex; align-items:center; gap:6px; }
+  .cat-btn.active { border-color:var(--gold); background:rgba(212,165,116,0.12); color:var(--gold); }
+  .cat-count { padding:1px 7px; border-radius:10px; font-size:11px; background:rgba(255,255,255,0.06); }
+  .cat-btn.active .cat-count { background:rgba(212,165,116,0.2); }
 
-  .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-  .logo-icon {
-    width: 38px; height: 38px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 700; color: var(--bg);
-    font-family: var(--sans);
-  }
-  .logo-text {
-    font-size: 23px; font-weight: 700;
-    font-family: var(--sans);
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    letter-spacing: 0.02em;
-  }
-  .logo-subtitle { font-size: 13px; color: var(--text-dim); font-family: var(--sans); }
+  .content { max-width:960px; margin:0 auto; padding:24px 24px 60px; }
+  .demo-notice { padding:14px 18px; border-radius:10px; margin-bottom:20px; background:rgba(212,165,116,0.08); border:1px solid rgba(212,165,116,0.15); font-size:13px; color:var(--gold); font-family:var(--sans); line-height:1.7; }
 
-  .header-actions { display: flex; gap: 10px; align-items: center; }
+  .loading { text-align:center; padding:80px 0; }
+  .spinner { width:48px; height:48px; margin:0 auto 20px; border:3px solid var(--border); border-top:3px solid var(--gold); border-radius:50%; animation:spin 1s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .loading-text { color:var(--text-dim); font-family:var(--sans); font-size:14px; }
+  .empty { text-align:center; padding:80px 0; color:var(--text-dim); }
+  .empty-icon { font-size:40px; margin-bottom:12px; }
+  .empty-text { font-family:var(--sans); font-size:15px; }
 
-  .btn {
-    padding: 8px 16px; border-radius: 8px;
-    border: 1px solid var(--border-light);
-    background: var(--surface);
-    color: var(--text-meta); cursor: pointer;
-    font-size: 13px; font-family: var(--sans);
-    font-weight: 600; transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .btn:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
-  .btn.active {
-    border-color: var(--gold);
-    background: rgba(212,165,116,0.12);
-    color: var(--gold);
-  }
+  .article-list { display:flex; flex-direction:column; gap:2px; }
+  .article-card { padding:20px 22px; border-radius:12px; border:1px solid transparent; transition:all .25s ease; cursor:pointer; }
+  .article-card:hover { background:var(--surface-hover); }
+  .article-card.expanded { background:var(--surface); border-color:var(--border-light); }
+  .article-inner { display:flex; gap:16px; align-items:flex-start; }
+  .source-icon { width:44px; height:44px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:20px; margin-top:2px; }
+  .article-body { flex:1; min-width:0; }
+  .article-meta { display:flex; align-items:center; gap:8px; margin-bottom:6px; flex-wrap:wrap; }
+  .meta-source { font-size:11px; font-weight:700; font-family:var(--sans); letter-spacing:0.02em; }
+  .meta-dot { color:#3A3F47; font-size:11px; }
+  .meta-time { font-size:11px; color:var(--text-dim); font-family:var(--sans); }
+  .meta-cat { font-size:10px; padding:2px 8px; border-radius:6px; background:var(--surface); border:1px solid var(--border); color:var(--text-meta); font-family:var(--sans); font-weight:600; }
 
-  /* Search */
-  .search-wrap { margin-top: 18px; position: relative; }
-  .search-icon {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    font-size: 16px; color: var(--text-dim); pointer-events: none;
-  }
-  .search-input {
-    width: 100%; padding: 12px 16px 12px 40px;
-    border-radius: 10px; border: 1px solid var(--border-light);
-    background: var(--surface); color: var(--text);
-    font-size: 14px; font-family: var(--sans);
-    outline: none; transition: border-color 0.2s;
-  }
-  .search-input:focus { border-color: rgba(212,165,116,0.4); }
-  .search-input::placeholder { color: var(--text-dim); }
+  .article-title { margin:0 0 4px; font-size:17px; font-weight:600; line-height:1.5; color:var(--text-title); font-family:var(--serif); }
+  .article-origin { margin:0 0 6px; font-size:12.5px; line-height:1.4; color:rgba(255,255,255,0.3); font-family:var(--sans); }
+  .article-snippet { margin:0; font-size:13.5px; color:var(--text-muted); line-height:1.65; font-family:var(--sans); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .article-card.expanded .article-snippet { display:block; -webkit-line-clamp:unset; overflow:visible; }
+  .article-origin-snippet { margin:4px 0 0; font-size:12px; color:rgba(255,255,255,0.25); line-height:1.5; font-family:var(--sans); }
+  .translating-hint { font-size:11px; color:var(--text-dim); font-family:var(--sans); font-style:italic; margin-top:4px; }
 
-  /* Categories */
-  .categories { display: flex; gap: 6px; margin-top: 16px; overflow-x: auto; padding-bottom: 4px; }
-  .categories::-webkit-scrollbar { height: 0; }
-  .cat-btn {
-    padding: 7px 14px; border-radius: 20px;
-    border: 1px solid var(--border-light);
-    background: transparent; color: var(--text-dim);
-    cursor: pointer; font-size: 12px; font-family: var(--sans);
-    font-weight: 600; white-space: nowrap;
-    transition: all 0.2s;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .cat-btn.active {
-    border-color: var(--gold);
-    background: rgba(212,165,116,0.12);
-    color: var(--gold);
-  }
-  .cat-count {
-    padding: 1px 7px; border-radius: 10px; font-size: 11px;
-    background: rgba(255,255,255,0.06);
-  }
-  .cat-btn.active .cat-count { background: rgba(212,165,116,0.2); }
+  .article-actions { display:flex; gap:10px; margin-top:14px; animation:fadeIn .2s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+  .btn-read { padding:8px 18px; border-radius:8px; background:linear-gradient(135deg,var(--gold),#B8895A); color:var(--bg); font-size:12px; font-family:var(--sans); font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:6px; border:none; cursor:pointer; }
+  .btn-save { padding:8px 16px; border-radius:8px; border:1px solid var(--border-light); background:var(--surface); color:var(--text-meta); cursor:pointer; font-size:12px; font-family:var(--sans); font-weight:600; }
+  .btn-save.saved { border-color:var(--gold); background:rgba(212,165,116,0.12); color:var(--gold); }
 
-  /* Content */
-  .content { max-width: 960px; margin: 0 auto; padding: 24px 24px 60px; }
+  .sources-panel { margin-top:40px; padding:20px 22px; border-radius:12px; background:rgba(255,255,255,0.02); border:1px solid var(--border); }
+  .sources-title { margin:0 0 14px; font-size:13px; font-weight:700; font-family:var(--sans); color:var(--text-dim); letter-spacing:0.06em; }
+  .sources-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:8px; }
+  .source-item { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; background:rgba(255,255,255,0.02); }
+  .source-item-icon { font-size:16px; } .source-item-name { font-size:12px; color:var(--text-meta); font-family:var(--sans); font-weight:500; }
+  .source-status { margin-left:auto; width:7px; height:7px; border-radius:50%; }
+  .status-ok { background:#4ADE80; } .status-fail { background:#F87171; } .status-demo { background:var(--text-dim); }
+  .update-bar { text-align:center; padding:16px 0; margin-top:20px; font-size:12px; color:var(--text-dim); font-family:var(--sans); }
+  .translate-bar { padding:10px 18px; border-radius:10px; margin-bottom:16px; background:rgba(212,165,116,0.06); border:1px solid rgba(212,165,116,0.12); font-size:12px; color:var(--gold); font-family:var(--sans); display:flex; align-items:center; gap:10px; }
+  .prog-bar { flex:1; height:4px; border-radius:2px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  .prog-fill { height:100%; border-radius:2px; background:var(--gold); transition:width .3s; }
 
-  /* Notice */
-  .demo-notice {
-    padding: 14px 18px; border-radius: 10px; margin-bottom: 20px;
-    background: rgba(212,165,116,0.08);
-    border: 1px solid rgba(212,165,116,0.15);
-    font-size: 13px; color: var(--gold); font-family: var(--sans);
-    line-height: 1.7;
-  }
-
-  /* Loading */
-  .loading { text-align: center; padding: 80px 0; }
-  .spinner {
-    width: 48px; height: 48px; margin: 0 auto 20px;
-    border: 3px solid var(--border);
-    border-top: 3px solid var(--gold);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { color: var(--text-dim); font-family: var(--sans); font-size: 14px; }
-
-  /* Empty */
-  .empty { text-align: center; padding: 80px 0; color: var(--text-dim); }
-  .empty-icon { font-size: 40px; margin-bottom: 12px; }
-  .empty-text { font-family: var(--sans); font-size: 15px; }
-
-  /* Article list */
-  .article-list { display: flex; flex-direction: column; gap: 2px; }
-
-  .article-card {
-    padding: 20px 22px; border-radius: 12px;
-    border: 1px solid transparent;
-    transition: all 0.25s ease; cursor: pointer;
-  }
-  .article-card:hover { background: var(--surface-hover); }
-  .article-card.expanded {
-    background: var(--surface);
-    border-color: var(--border-light);
-  }
-
-  .article-inner { display: flex; gap: 16px; align-items: flex-start; }
-
-  .source-icon {
-    width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; margin-top: 2px;
-  }
-
-  .article-body { flex: 1; min-width: 0; }
-
-  .article-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
-  .meta-source { font-size: 11px; font-weight: 700; font-family: var(--sans); letter-spacing: 0.02em; }
-  .meta-dot { color: #3A3F47; font-size: 11px; }
-  .meta-time { font-size: 11px; color: var(--text-dim); font-family: var(--sans); }
-  .meta-cat {
-    font-size: 10px; padding: 2px 8px; border-radius: 6px;
-    background: var(--surface); border: 1px solid var(--border);
-    color: var(--text-meta); font-family: var(--sans); font-weight: 600;
-  }
-
-  .article-title {
-    margin: 0 0 6px; font-size: 17px; font-weight: 600;
-    line-height: 1.5; color: var(--text-title);
-    font-family: var(--serif); letter-spacing: 0.01em;
-  }
-
-  .article-snippet {
-    margin: 0; font-size: 13.5px; color: var(--text-muted);
-    line-height: 1.65; font-family: var(--sans);
-    display: -webkit-box; -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical; overflow: hidden;
-  }
-  .article-card.expanded .article-snippet {
-    display: block; -webkit-line-clamp: unset; overflow: visible;
-  }
-
-  .article-actions {
-    display: flex; gap: 10px; margin-top: 14px;
-    animation: fadeIn 0.2s ease;
-  }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-
-  .btn-read {
-    padding: 8px 18px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--gold), #B8895A);
-    color: var(--bg); font-size: 12px;
-    font-family: var(--sans); font-weight: 700;
-    text-decoration: none; display: inline-flex;
-    align-items: center; gap: 6px; border: none; cursor: pointer;
-  }
-  .btn-save {
-    padding: 8px 16px; border-radius: 8px;
-    border: 1px solid var(--border-light);
-    background: var(--surface); color: var(--text-meta);
-    cursor: pointer; font-size: 12px;
-    font-family: var(--sans); font-weight: 600;
-  }
-  .btn-save.saved {
-    border-color: var(--gold);
-    background: rgba(212,165,116,0.12);
-    color: var(--gold);
-  }
-
-  /* Sources panel */
-  .sources-panel {
-    margin-top: 40px; padding: 20px 22px; border-radius: 12px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid var(--border);
-  }
-  .sources-title {
-    margin: 0 0 14px; font-size: 13px; font-weight: 700;
-    font-family: var(--sans); color: var(--text-dim);
-    letter-spacing: 0.06em;
-  }
-  .sources-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px;
-  }
-  .source-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 12px; border-radius: 8px;
-    background: rgba(255,255,255,0.02);
-  }
-  .source-item-icon { font-size: 16px; }
-  .source-item-name { font-size: 12px; color: var(--text-meta); font-family: var(--sans); font-weight: 500; }
-  .source-status {
-    margin-left: auto; width: 7px; height: 7px; border-radius: 50%;
-  }
-  .status-ok { background: #4ADE80; }
-  .status-fail { background: #F87171; }
-  .status-demo { background: var(--text-dim); }
-
-  /* Last updated bar */
-  .update-bar {
-    text-align: center; padding: 16px 0; margin-top: 20px;
-    font-size: 12px; color: var(--text-dim); font-family: var(--sans);
-  }
-
-  /* Responsive */
-  @media (max-width: 640px) {
-    .header-top { flex-direction: column; align-items: flex-start; }
-    .logo-text { font-size: 20px; }
-    .article-title { font-size: 15px; }
-    .source-icon { width: 36px; height: 36px; font-size: 17px; }
-    .sources-grid { grid-template-columns: 1fr; }
+  @media (max-width:640px) {
+    .header-top { flex-direction:column; align-items:flex-start; }
+    .logo-text { font-size:20px; } .article-title { font-size:15px; }
+    .source-icon { width:36px; height:36px; font-size:17px; }
+    .sources-grid { grid-template-columns:1fr; }
   }
 </style>
 </head>
 <body>
-
 <div id="app"></div>
-
 <script>
-// ============================================================
-//  HR 脉搏阅读器 — 纯原生 JavaScript，无需任何构建工具
-// ============================================================
-
 const RSS_FEEDS = [
-  { name: "哈佛商业评论", url: "https://hbr.org/topic/human-resource-management?format=rss", category: "theory", color: "#C0392B", icon: "📕" },
-  { name: "SHRM 人力资源协会", url: "https://www.shrm.org/rss/pages/default.aspx", category: "theory", color: "#1B5E20", icon: "🏛" },
-  { name: "Josh Bersin", url: "https://joshbersin.com/feed/", category: "tech", color: "#6A1B9A", icon: "🔮" },
-  { name: "HR Bartender", url: "https://www.hrbartender.com/feed/", category: "culture", color: "#E65100", icon: "🍸" },
-  { name: "AIHR 人力分析学院", url: "https://www.aihr.com/blog/feed/", category: "tech", color: "#0277BD", icon: "📊" },
-  { name: "HR Dive", url: "https://www.hrdive.com/feeds/news/", category: "talent", color: "#00695C", icon: "🌊" },
-  { name: "Workology", url: "https://workology.com/feed/", category: "culture", color: "#AD1457", icon: "⚡" },
-  { name: "People Managing People", url: "https://peoplemanagingpeople.com/feed/", category: "talent", color: "#37474F", icon: "👥" },
-  { name: "HR Executive", url: "https://hrexecutive.com/feed/", category: "theory", color: "#4527A0", icon: "📰" },
-  { name: "Talent Culture", url: "https://talentculture.com/feed/", category: "culture", color: "#F57F17", icon: "🌟" },
+  { name:"哈佛商业评论", url:"https://hbr.org/topic/human-resource-management?format=rss", category:"theory", color:"#C0392B", icon:"📕" },
+  { name:"SHRM", url:"https://www.shrm.org/rss/pages/default.aspx", category:"theory", color:"#1B5E20", icon:"🏛" },
+  { name:"Josh Bersin", url:"https://joshbersin.com/feed/", category:"tech", color:"#6A1B9A", icon:"🔮" },
+  { name:"HR Bartender", url:"https://www.hrbartender.com/feed/", category:"culture", color:"#E65100", icon:"🍸" },
+  { name:"AIHR", url:"https://www.aihr.com/blog/feed/", category:"tech", color:"#0277BD", icon:"📊" },
+  { name:"HR Dive", url:"https://www.hrdive.com/feeds/news/", category:"talent", color:"#00695C", icon:"🌊" },
+  { name:"Workology", url:"https://workology.com/feed/", category:"culture", color:"#AD1457", icon:"⚡" },
+  { name:"People Managing People", url:"https://peoplemanagingpeople.com/feed/", category:"talent", color:"#37474F", icon:"👥" },
+  { name:"HR Executive", url:"https://hrexecutive.com/feed/", category:"theory", color:"#4527A0", icon:"📰" },
+  { name:"Talent Culture", url:"https://talentculture.com/feed/", category:"culture", color:"#F57F17", icon:"🌟" },
 ];
+const CATEGORIES = { all:{label:"全部主题",emoji:"📚"}, theory:{label:"HR理论与战略",emoji:"🎯"}, talent:{label:"人才管理与招聘",emoji:"🔍"}, tech:{label:"HR科技与分析",emoji:"💡"}, culture:{label:"敬业度与文化",emoji:"🤝"} };
 
-const CATEGORIES = {
-  all:     { label: "全部主题",      emoji: "📚" },
-  theory:  { label: "HR理论与战略",  emoji: "🎯" },
-  talent:  { label: "人才管理与招聘", emoji: "🔍" },
-  tech:    { label: "HR科技与分析",  emoji: "💡" },
-  culture: { label: "敬业度与文化",  emoji: "🤝" },
-};
-
-// 多个代理服务，自动切换，提升成功率
-const PROXIES = [
-  { url: "https://api.rss2json.com/v1/api.json?rss_url=", type: "rss2json" },
-  { url: "https://api.allorigins.win/raw?url=", type: "allorigins" },
-];
-
-const DEMO_ARTICLES = [
-  { title:"战略人力资源的未来：从行政角色到业务伙伴", source:"哈佛商业评论", category:"theory", color:"#C0392B", icon:"📕", date:new Date(Date.now()-3600000*2), link:"https://hbr.org", snippet:"随着组织面临前所未有的变革，HR 领导者必须从传统行政角色转型为推动组织变革的战略业务伙伴。" },
-  { title:"AI 驱动的招聘：2026 年哪些工具真正有效", source:"AIHR 人力分析学院", category:"tech", color:"#0277BD", icon:"📊", date:new Date(Date.now()-3600000*5), link:"https://aihr.com", snippet:"基于对 500 多个企业实施案例的数据分析，深入剖析哪些 AI 招聘工具能够带来真实成效。" },
-  { title:"构建心理安全感文化的实操指南", source:"HR Bartender", category:"culture", color:"#E65100", icon:"🍸", date:new Date(Date.now()-3600000*8), link:"https://hrbartender.com", snippet:"HR 从业者可以采取哪些具体步骤来培养工作场所的心理安全感？" },
-  { title:"技能型组织：超越传统岗位体系", source:"Josh Bersin", category:"theory", color:"#6A1B9A", icon:"🔮", date:new Date(Date.now()-3600000*12), link:"https://joshbersin.com", snippet:"为什么领先企业正在打破传统岗位架构，转向基于技能的人才模型？" },
-  { title:"员工敬业度降至五年最低：HR 的应对之道", source:"SHRM 人力资源协会", category:"culture", color:"#1B5E20", icon:"🏛", date:new Date(Date.now()-3600000*14), link:"https://shrm.org", snippet:"最新调研显示员工敬业度大幅下降。本文梳理了各 HR 团队正在使用的循证策略。" },
-  { title:"薪酬透明法律：各地区合规全指南", source:"HR Dive", category:"talent", color:"#00695C", icon:"🌊", date:new Date(Date.now()-3600000*18), link:"https://hrdive.com", snippet:"随着薪酬透明立法在全球范围内快速扩展，HR 合规团队需要提前布局。" },
-  { title:"人力分析成熟度模型：你的团队处于哪个阶段？", source:"AIHR 人力分析学院", category:"tech", color:"#0277BD", icon:"📊", date:new Date(Date.now()-3600000*22), link:"https://aihr.com", snippet:"一套评估组织人力分析能力的框架，以及从描述性分析迈向预测性分析的完整路线图。" },
-  { title:"远程员工入职培训：来自 1000 名新员工的经验", source:"Workology", category:"talent", color:"#AD1457", icon:"⚡", date:new Date(Date.now()-3600000*26), link:"https://workology.com", snippet:"对 1000 名远程新员工的调查揭示了有效入职的关键因素，以及导致早期离职的常见误区。" },
-  { title:"CHRO 在 C-Suite 中的角色演变", source:"HR Executive", category:"theory", color:"#4527A0", icon:"📰", date:new Date(Date.now()-3600000*30), link:"https://hrexecutive.com", snippet:"首席人力资源官越来越被要求参与业务战略决策。" },
-  { title:"通过刻意设计打造高绩效团队文化", source:"Talent Culture", category:"culture", color:"#F57F17", icon:"🌟", date:new Date(Date.now()-3600000*34), link:"https://talentculture.com", snippet:"优秀的企业文化不是偶然形成的。了解顶尖组织用来刻意设计驱动绩效和创新的文化框架。" },
-  { title:"快速变革时代的继任规划", source:"People Managing People", category:"talent", color:"#37474F", icon:"👥", date:new Date(Date.now()-3600000*38), link:"https://peoplemanagingpeople.com", snippet:"传统的继任规划已无法应对当今商业环境的变化速度。" },
-  { title:"真正让董事会关注的 HR 指标", source:"哈佛商业评论", category:"theory", color:"#C0392B", icon:"📕", date:new Date(Date.now()-3600000*42), link:"https://hbr.org", snippet:"董事会对大多数 HR 仪表盘并不感兴趣。研究揭示了五个关键指标。" },
-  { title:"生成式 AI 赋能 HR 运营：实战手册", source:"Josh Bersin", category:"tech", color:"#6A1B9A", icon:"🔮", date:new Date(Date.now()-3600000*48), link:"https://joshbersin.com", snippet:"从自动生成岗位描述到 AI 辅助绩效评估的实操指南。" },
-  { title:"四天工作制：HR 实施经验总结", source:"HR Bartender", category:"culture", color:"#E65100", icon:"🍸", date:new Date(Date.now()-3600000*52), link:"https://hrbartender.com", snippet:"已成功实施四天工作制的企业分享了 HR 操作手册。" },
-  { title:"预测性离职模型：构建你的第一个算法", source:"AIHR 人力分析学院", category:"tech", color:"#0277BD", icon:"📊", date:new Date(Date.now()-3600000*58), link:"https://aihr.com", snippet:"为 HR 分析师准备的分步指南：如何使用 HRIS 数据构建员工流失预测模型。" },
-  { title:"2026 年全球人才获取趋势：新兴市场报告", source:"SHRM 人力资源协会", category:"talent", color:"#1B5E20", icon:"🏛", date:new Date(Date.now()-3600000*62), link:"https://shrm.org", snippet:"SHRM 最新研究揭示了全球增长最快的人才市场。" },
+const DEMO = [
+  {title:"战略人力资源的未来：从行政角色到业务伙伴",source:"哈佛商业评论",category:"theory",color:"#C0392B",icon:"📕",date:new Date(Date.now()-36e5*2),link:"https://hbr.org",snippet:"随着组织面临前所未有的变革，HR 领导者必须从传统行政角色转型为推动组织变革的战略业务伙伴。",title_zh:"战略人力资源的未来：从行政角色到业务伙伴",snippet_zh:"随着组织面临前所未有的变革，HR 领导者必须从传统行政角色转型为推动组织变革的战略业务伙伴。"},
+  {title:"AI 驱动的招聘：2026 年哪些工具真正有效",source:"AIHR",category:"tech",color:"#0277BD",icon:"📊",date:new Date(Date.now()-36e5*5),link:"https://aihr.com",snippet:"基于对 500 多个企业实施案例的数据分析，深入剖析哪些 AI 招聘工具能够带来真实成效。",title_zh:"AI 驱动的招聘：2026 年哪些工具真正有效",snippet_zh:"基于对 500 多个企业实施案例的数据分析，深入剖析哪些 AI 招聘工具能够带来真实成效。"},
+  {title:"构建心理安全感文化的实操指南",source:"HR Bartender",category:"culture",color:"#E65100",icon:"🍸",date:new Date(Date.now()-36e5*8),link:"https://hrbartender.com",snippet:"HR 从业者可以采取哪些具体步骤来培养工作场所的心理安全感？",title_zh:"构建心理安全感文化的实操指南",snippet_zh:"HR 从业者可以采取哪些具体步骤来培养工作场所的心理安全感？"},
+  {title:"技能型组织：超越传统岗位体系",source:"Josh Bersin",category:"theory",color:"#6A1B9A",icon:"🔮",date:new Date(Date.now()-36e5*12),link:"https://joshbersin.com",snippet:"为什么领先企业正在打破传统岗位架构，转向基于技能的人才模型？",title_zh:"技能型组织：超越传统岗位体系",snippet_zh:"为什么领先企业正在打破传统岗位架构，转向基于技能的人才模型？"},
+  {title:"员工敬业度降至五年最低",source:"SHRM",category:"culture",color:"#1B5E20",icon:"🏛",date:new Date(Date.now()-36e5*14),link:"https://shrm.org",snippet:"最新调研显示员工敬业度大幅下降。本文梳理了各 HR 团队正在使用的循证策略。",title_zh:"员工敬业度降至五年最低：HR 的应对之道",snippet_zh:"最新调研显示员工敬业度大幅下降。本文梳理了各 HR 团队正在使用的循证策略。"},
+  {title:"薪酬透明法律全指南",source:"HR Dive",category:"talent",color:"#00695C",icon:"🌊",date:new Date(Date.now()-36e5*18),link:"https://hrdive.com",snippet:"随着薪酬透明立法在全球范围内快速扩展，HR 合规团队需要提前布局。",title_zh:"薪酬透明法律：各地区合规全指南",snippet_zh:"随着薪酬透明立法在全球范围内快速扩展，HR 合规团队需要提前布局。"},
+  {title:"人力分析成熟度模型",source:"AIHR",category:"tech",color:"#0277BD",icon:"📊",date:new Date(Date.now()-36e5*22),link:"https://aihr.com",snippet:"一套评估组织人力分析能力的框架，以及从描述性分析迈向预测性分析的路线图。",title_zh:"人力分析成熟度模型：你的团队处于哪个阶段？",snippet_zh:"一套评估组织人力分析能力的框架，以及从描述性分析迈向预测性分析的路线图。"},
+  {title:"远程入职培训经验",source:"Workology",category:"talent",color:"#AD1457",icon:"⚡",date:new Date(Date.now()-36e5*26),link:"https://workology.com",snippet:"对 1000 名远程新员工的调查揭示了有效入职的关键因素。",title_zh:"远程员工入职培训：来自 1000 名新员工的经验",snippet_zh:"对 1000 名远程新员工的调查揭示了有效入职的关键因素，以及导致早期离职的常见误区。"},
+  {title:"CHRO 在高管层中的角色演变",source:"HR Executive",category:"theory",color:"#4527A0",icon:"📰",date:new Date(Date.now()-36e5*30),link:"https://hrexecutive.com",snippet:"首席人力资源官越来越被要求参与业务战略决策。",title_zh:"CHRO 在高管层中的角色演变",snippet_zh:"首席人力资源官越来越被要求参与业务战略决策。"},
+  {title:"打造高绩效团队文化",source:"Talent Culture",category:"culture",color:"#F57F17",icon:"🌟",date:new Date(Date.now()-36e5*34),link:"https://talentculture.com",snippet:"优秀的企业文化不是偶然形成的。了解驱动绩效和创新的文化框架。",title_zh:"通过刻意设计打造高绩效团队文化",snippet_zh:"优秀的企业文化不是偶然形成的。了解顶尖组织用来驱动绩效和创新的文化框架。"},
 ];
 
 // ── State ──
 let state = {
-  articles: [],
-  loading: true,
-  activeCategory: "all",
-  searchQuery: "",
-  savedArticles: JSON.parse(localStorage.getItem("hr_saved") || "[]"),
-  showSaved: false,
-  feedStatus: {},
-  usingDemo: false,
-  expandedIndex: null,
-  lastUpdated: null,
+  articles:[], loading:true, activeCategory:"all", searchQuery:"",
+  savedArticles: JSON.parse(localStorage.getItem("hr_saved")||"[]"),
+  showSaved:false, feedStatus:{}, usingDemo:false, expandedIndex:null,
+  lastUpdated:null, showChinese:true,
+  tProg:{ total:0, done:0, active:false },
 };
-
-function setState(patch) {
-  Object.assign(state, patch);
-  render();
-}
+function setState(p){ Object.assign(state,p); render(); }
 
 // ── Helpers ──
-function timeAgo(d) {
-  const s = Math.floor((Date.now() - new Date(d).getTime()) / 1000);
-  if (s < 3600) return Math.floor(s/60) + " 分钟前";
-  if (s < 86400) return Math.floor(s/3600) + " 小时前";
-  if (s < 604800) return Math.floor(s/86400) + " 天前";
-  return new Date(d).toLocaleDateString("zh-CN", { month:"short", day:"numeric" });
+function timeAgo(d){ const s=Math.floor((Date.now()-new Date(d).getTime())/1000); if(s<3600)return Math.floor(s/60)+" 分钟前"; if(s<86400)return Math.floor(s/3600)+" 小时前"; if(s<604800)return Math.floor(s/86400)+" 天前"; return new Date(d).toLocaleDateString("zh-CN",{month:"short",day:"numeric"}); }
+function stripHtml(h){ const t=document.createElement("div"); t.innerHTML=h; return t.textContent||""; }
+function escHtml(s){ const d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+function isSaved(a){ return state.savedArticles.some(s=>s.link===a.link&&s.title===a.title); }
+function isChinese(t){ if(!t)return false; const c=t.match(/[\u4e00-\u9fff]/g); return c&&c.length>t.length*0.15; }
+
+// ── Translation Cache ──
+let tCache={}; try{tCache=JSON.parse(localStorage.getItem("hr_trans")||"{}");}catch{tCache={};}
+function saveTC(){ try{localStorage.setItem("hr_trans",JSON.stringify(tCache));}catch{} }
+
+// ── Claude API Translation ──
+async function translateBatch(items){
+  const block=items.map((it,i)=>`[${i}]\nTITLE: ${it.title}\nSNIPPET: ${it.snippet||"(none)"}`).join("\n\n");
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-5-20250514", max_tokens:4000,
+        messages:[{role:"user",content:`你是专业HR领域翻译。将以下英文HR文章标题和摘要翻译为简体中文。保留专业术语准确性。严格按JSON数组格式返回，不要包含任何其他文字或markdown标记：[{"title_zh":"中文标题","snippet_zh":"中文摘要"},...]
+
+${block}`}]
+      })
+    });
+    const data=await res.json();
+    const text=data.content?.map(c=>c.text||"").join("")||"";
+    return JSON.parse(text.replace(/```json|```/g,"").trim());
+  }catch(e){ console.error("翻译失败:",e); return null; }
 }
 
-function stripHtml(h) { const t = document.createElement("div"); t.innerHTML = h; return t.textContent || ""; }
-
-function escHtml(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
-
-function isSaved(article) { return state.savedArticles.some(a => a.link === article.link && a.title === article.title); }
-
-function toggleSave(article) {
-  let saved = [...state.savedArticles];
-  const idx = saved.findIndex(a => a.link === article.link && a.title === article.title);
-  if (idx >= 0) saved.splice(idx, 1); else saved.push(article);
-  localStorage.setItem("hr_saved", JSON.stringify(saved));
-  setState({ savedArticles: saved });
-}
-
-// ── Fetch ──
-async function fetchFeedViaRss2Json(feed) {
-  const res = await fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed.url));
-  const data = await res.json();
-  if (data.status !== "ok" || !data.items) throw new Error("rss2json failed");
-  return data.items.map(item => ({
-    title: item.title,
-    link: item.link,
-    date: new Date(item.pubDate),
-    snippet: stripHtml(item.description || "").slice(0, 220),
-    source: feed.name, category: feed.category, color: feed.color, icon: feed.icon,
-  }));
-}
-
-async function fetchFeedViaAllOrigins(feed) {
-  const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(feed.url));
-  const text = await res.text();
-  const parser = new DOMParser();
-  const xml = parser.parseFromString(text, "text/xml");
-  const items = xml.querySelectorAll("item");
-  if (items.length === 0) {
-    // try Atom format
-    const entries = xml.querySelectorAll("entry");
-    if (entries.length === 0) throw new Error("allorigins: no items");
-    return Array.from(entries).map(e => ({
-      title: e.querySelector("title")?.textContent || "",
-      link: e.querySelector("link")?.getAttribute("href") || e.querySelector("link")?.textContent || "",
-      date: new Date(e.querySelector("updated,published")?.textContent || Date.now()),
-      snippet: stripHtml(e.querySelector("summary,content")?.textContent || "").slice(0, 220),
-      source: feed.name, category: feed.category, color: feed.color, icon: feed.icon,
-    }));
-  }
-  return Array.from(items).map(item => ({
-    title: item.querySelector("title")?.textContent || "",
-    link: item.querySelector("link")?.textContent || "",
-    date: new Date(item.querySelector("pubDate")?.textContent || Date.now()),
-    snippet: stripHtml(item.querySelector("description")?.textContent || "").slice(0, 220),
-    source: feed.name, category: feed.category, color: feed.color, icon: feed.icon,
-  }));
-}
-
-async function fetchSingleFeed(feed) {
-  // 依次尝试多个代理
-  try { return await fetchFeedViaRss2Json(feed); } catch {}
-  try { return await fetchFeedViaAllOrigins(feed); } catch {}
-  return null;
-}
-
-async function fetchFeeds() {
-  setState({ loading: true });
-  const all = [];
-  const status = {};
-
-  const promises = RSS_FEEDS.map(async feed => {
-    const items = await fetchSingleFeed(feed);
-    if (items && items.length > 0) {
-      status[feed.name] = { ok: true, count: items.length };
-      all.push(...items);
-    } else {
-      status[feed.name] = { ok: false };
-    }
+async function translateAll(){
+  const arts=state.articles; const need=[]; const needIdx=[];
+  arts.forEach((a,i)=>{
+    if(a.title_zh) return;
+    const ck=a.link||a.title;
+    if(tCache[ck]){ a.title_zh=tCache[ck].t; a.snippet_zh=tCache[ck].s; return; }
+    if(isChinese(a.title)){ a.title_zh=a.title; a.snippet_zh=a.snippet; return; }
+    need.push({title:a.title,snippet:a.snippet}); needIdx.push(i);
   });
+  if(need.length===0){ setState({articles:[...arts],tProg:{total:0,done:0,active:false}}); return; }
 
-  await Promise.all(promises);
+  const BS=8; const total=need.length;
+  setState({tProg:{total,done:0,active:true}});
+  for(let b=0;b<Math.ceil(total/BS);b++){
+    const s=b*BS; const batch=need.slice(s,s+BS); const bi=needIdx.slice(s,s+BS);
+    const res=await translateBatch(batch);
+    if(res&&Array.isArray(res)){
+      res.forEach((r,j)=>{
+        const idx=bi[j]; if(idx===undefined||!arts[idx])return;
+        arts[idx].title_zh=r.title_zh||arts[idx].title;
+        arts[idx].snippet_zh=r.snippet_zh||arts[idx].snippet;
+        const ck=arts[idx].link||arts[idx].title;
+        tCache[ck]={t:r.title_zh,s:r.snippet_zh};
+      });
+      saveTC();
+    }
+    setState({articles:[...arts],tProg:{total,done:Math.min(s+BS,total),active:b<Math.ceil(total/BS)-1}});
+  }
+}
 
-  if (all.length > 0) {
-    all.sort((a,b) => b.date - a.date);
-    setState({ articles: all, feedStatus: status, usingDemo: false, loading: false, lastUpdated: new Date(), expandedIndex: null });
+// ── RSS Fetch ──
+async function fetchVia1(feed){
+  const r=await fetch("https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent(feed.url));
+  const d=await r.json(); if(d.status!=="ok"||!d.items)throw 0;
+  return d.items.map(i=>({title:i.title,link:i.link,date:new Date(i.pubDate),snippet:stripHtml(i.description||"").slice(0,220),source:feed.name,category:feed.category,color:feed.color,icon:feed.icon}));
+}
+async function fetchVia2(feed){
+  const r=await fetch("https://api.allorigins.win/raw?url="+encodeURIComponent(feed.url));
+  const t=await r.text(); const x=new DOMParser().parseFromString(t,"text/xml");
+  let items=x.querySelectorAll("item");
+  if(!items.length){
+    const e=x.querySelectorAll("entry"); if(!e.length)throw 0;
+    return Array.from(e).map(e=>({title:e.querySelector("title")?.textContent||"",link:e.querySelector("link")?.getAttribute("href")||"",date:new Date(e.querySelector("updated,published")?.textContent||Date.now()),snippet:stripHtml(e.querySelector("summary,content")?.textContent||"").slice(0,220),source:feed.name,category:feed.category,color:feed.color,icon:feed.icon}));
+  }
+  return Array.from(items).map(i=>({title:i.querySelector("title")?.textContent||"",link:i.querySelector("link")?.textContent||"",date:new Date(i.querySelector("pubDate")?.textContent||Date.now()),snippet:stripHtml(i.querySelector("description")?.textContent||"").slice(0,220),source:feed.name,category:feed.category,color:feed.color,icon:feed.icon}));
+}
+async function fetchOne(feed){ try{return await fetchVia1(feed);}catch{} try{return await fetchVia2(feed);}catch{} return null; }
+
+async function fetchFeeds(){
+  setState({loading:true});
+  const all=[],status={};
+  await Promise.all(RSS_FEEDS.map(async f=>{
+    const items=await fetchOne(f);
+    if(items&&items.length){status[f.name]={ok:true,count:items.length};all.push(...items);}
+    else{status[f.name]={ok:false};}
+  }));
+  if(all.length>0){
+    all.sort((a,b)=>b.date-a.date);
+    setState({articles:all,feedStatus:status,usingDemo:false,loading:false,lastUpdated:new Date(),expandedIndex:null});
+    if(state.showChinese) translateAll();
   } else {
-    setState({ articles: DEMO_ARTICLES, feedStatus: status, usingDemo: true, loading: false, lastUpdated: new Date(), expandedIndex: null });
+    setState({articles:DEMO,feedStatus:status,usingDemo:true,loading:false,lastUpdated:new Date(),expandedIndex:null});
   }
 }
 
 // ── Render ──
-function render() {
-  const { articles, loading, activeCategory, searchQuery, savedArticles, showSaved, feedStatus, usingDemo, expandedIndex, lastUpdated } = state;
-
-  const display = showSaved ? savedArticles : articles;
-  const filtered = display.filter(a => {
-    const cat = activeCategory === "all" || a.category === activeCategory;
-    const q = searchQuery.toLowerCase();
-    const search = !q || a.title.toLowerCase().includes(q) || a.source.toLowerCase().includes(q) || (a.snippet && a.snippet.toLowerCase().includes(q));
-    return cat && search;
+function render(){
+  const {articles,loading,activeCategory,searchQuery,savedArticles,showSaved,feedStatus,usingDemo,expandedIndex,lastUpdated,showChinese,tProg}=state;
+  const display=showSaved?savedArticles:articles;
+  const filtered=display.filter(a=>{
+    const cat=activeCategory==="all"||a.category===activeCategory;
+    const q=searchQuery.toLowerCase();
+    const s=!q||a.title.toLowerCase().includes(q)||a.source.toLowerCase().includes(q)||(a.snippet&&a.snippet.toLowerCase().includes(q))||(a.title_zh&&a.title_zh.includes(searchQuery))||(a.snippet_zh&&a.snippet_zh.includes(searchQuery));
+    return cat&&s;
   });
+  const stats={}; Object.keys(CATEGORIES).forEach(k=>{stats[k]=k==="all"?articles.length:articles.filter(a=>a.category===k).length;});
 
-  const stats = {};
-  Object.keys(CATEGORIES).forEach(k => {
-    stats[k] = k === "all" ? articles.length : articles.filter(a => a.category === k).length;
-  });
-
-  let html = `
-  <div class="header">
-    <div class="header-inner">
-      <div class="header-top">
-        <div>
-          <div class="logo-area">
-            <div class="logo-icon">HR</div>
-            <div class="logo-text">脉搏阅读器</div>
-          </div>
-          <div class="logo-subtitle">来自 ${RSS_FEEDS.length} 个顶级 HR 博客的 ${articles.length} 篇文章${usingDemo ? " · 演示模式" : ""}</div>
-        </div>
-        <div class="header-actions">
-          <button class="btn ${showSaved ? 'active' : ''}" onclick="setState({showSaved:!state.showSaved})">★ 收藏夹 (${savedArticles.length})</button>
-          <button class="btn" onclick="fetchFeeds()" ${loading ? 'disabled' : ''}>${loading ? "⟳ 加载中..." : "⟳ 刷新"}</button>
-        </div>
-      </div>
-
-      <div class="search-wrap">
-        <span class="search-icon">⌕</span>
-        <input class="search-input" type="text" placeholder="搜索文章标题、主题或来源..." value="${escHtml(searchQuery)}" oninput="setState({searchQuery:this.value})" />
-      </div>
-
-      <div class="categories">
-        ${Object.entries(CATEGORIES).map(([k, v]) => `
-          <button class="cat-btn ${activeCategory===k && !showSaved ? 'active' : ''}" onclick="setState({activeCategory:'${k}',showSaved:false})">
-            <span>${v.emoji}</span><span>${v.label}</span><span class="cat-count">${stats[k]}</span>
-          </button>
-        `).join("")}
-      </div>
+  let h=`<div class="header"><div class="header-inner">
+    <div class="header-top"><div>
+      <div class="logo-area"><div class="logo-icon">HR</div><div class="logo-text">脉搏阅读器</div></div>
+      <div class="logo-subtitle">来自 ${RSS_FEEDS.length} 个顶级 HR 博客的 ${articles.length} 篇文章${usingDemo?" · 演示模式":""}</div>
+    </div><div class="header-actions">
+      <button class="btn ${showChinese?'active':''}" onclick="toggleTrans()">译 中文翻译</button>
+      <button class="btn ${showSaved?'active':''}" onclick="setState({showSaved:!state.showSaved})">★ 收藏夹 (${savedArticles.length})</button>
+      <button class="btn" onclick="fetchFeeds()" ${loading?'disabled':''}>${loading?"⟳ 加载中...":"⟳ 刷新"}</button>
+    </div></div>
+    <div class="search-wrap"><span class="search-icon">⌕</span>
+      <input class="search-input" type="text" placeholder="搜索文章（支持中英文）..." value="${escHtml(searchQuery)}" oninput="setState({searchQuery:this.value})" />
     </div>
-  </div>
+    <div class="categories">${Object.entries(CATEGORIES).map(([k,v])=>`<button class="cat-btn ${activeCategory===k&&!showSaved?'active':''}" onclick="setState({activeCategory:'${k}',showSaved:false})"><span>${v.emoji}</span><span>${v.label}</span><span class="cat-count">${stats[k]}</span></button>`).join("")}</div>
+  </div></div><div class="content">`;
 
-  <div class="content">`;
+  if(usingDemo) h+=`<div class="demo-notice"><strong>📡 演示模式</strong> — 当前展示精选示例。部署到 GitHub Pages 后将自动拉取实时内容并 AI 翻译。</div>`;
 
-  if (usingDemo) {
-    html += `<div class="demo-notice"><strong>📡 演示模式</strong> — 由于网络限制，暂时无法连接 RSS 源。当前展示的是精选示例文章。部署到 GitHub Pages 后将自动拉取全部 10 个 HR 博客的实时内容。</div>`;
+  if(tProg.active){
+    const pct=tProg.total>0?Math.round(tProg.done/tProg.total*100):0;
+    h+=`<div class="translate-bar"><span>🤖 AI 正在翻译... (${tProg.done}/${tProg.total})</span><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div><span>${pct}%</span></div>`;
   }
 
-  if (loading) {
-    html += `<div class="loading"><div class="spinner"></div><p class="loading-text">正在从 ${RSS_FEEDS.length} 个 HR 博客获取最新内容...</p></div>`;
-  } else if (filtered.length === 0) {
-    html += `<div class="empty"><p class="empty-icon">🔍</p><p class="empty-text">${showSaved ? "还没有收藏任何文章，点击 ☆ 即可收藏。" : "没有找到匹配的文章，请尝试其他关键词。"}</p></div>`;
+  if(loading){
+    h+=`<div class="loading"><div class="spinner"></div><p class="loading-text">正在从 ${RSS_FEEDS.length} 个 HR 博客获取最新内容...</p></div>`;
+  } else if(!filtered.length){
+    h+=`<div class="empty"><p class="empty-icon">🔍</p><p class="empty-text">${showSaved?"还没有收藏文章，点击 ☆ 即可收藏。":"没有匹配的文章，请尝试其他关键词。"}</p></div>`;
   } else {
-    html += `<div class="article-list">`;
-    filtered.forEach((a, i) => {
-      const expanded = expandedIndex === i;
-      const saved = isSaved(a);
-      html += `
-      <div class="article-card ${expanded ? 'expanded' : ''}" onclick="setState({expandedIndex: state.expandedIndex===${i} ? null : ${i}})">
-        <div class="article-inner">
-          <div class="source-icon" style="background:${a.color}18;border:1px solid ${a.color}30">${a.icon}</div>
-          <div class="article-body">
-            <div class="article-meta">
-              <span class="meta-source" style="color:${a.color}">${escHtml(a.source)}</span>
-              <span class="meta-dot">·</span>
-              <span class="meta-time">${timeAgo(a.date)}</span>
-              <span class="meta-cat">${CATEGORIES[a.category]?.label || a.category}</span>
-            </div>
-            <h3 class="article-title">${escHtml(a.title)}</h3>
-            ${a.snippet ? `<p class="article-snippet">${escHtml(a.snippet)}</p>` : ""}
-            ${expanded ? `
-              <div class="article-actions">
-                <a class="btn-read" href="${escHtml(a.link)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">阅读原文 ↗</a>
-                <button class="btn-save ${saved ? 'saved' : ''}" onclick="event.stopPropagation();toggleSave(state.${showSaved ? 'savedArticles' : 'articles'}[${showSaved ? state.savedArticles.indexOf(a) : articles.indexOf(a)}] || filtered_cache[${i}])">${saved ? "★ 已收藏" : "☆ 收藏"}</button>
-              </div>
-            ` : ""}
+    h+=`<div class="article-list">`;
+    filtered.forEach((a,i)=>{
+      const exp=expandedIndex===i, saved=isSaved(a);
+      const isEn=!isChinese(a.title);
+      const hasZh=showChinese&&a.title_zh&&isEn;
+      // Determine what to show
+      const mainTitle=hasZh?a.title_zh:a.title;
+      const showOriginTitle=hasZh;
+      const mainSnippet=hasZh&&a.snippet_zh?a.snippet_zh:a.snippet;
+      const showOriginSnippet=hasZh&&a.snippet_zh&&exp;
+      const waiting=showChinese&&isEn&&!a.title_zh;
+
+      h+=`<div class="article-card ${exp?'expanded':''}" onclick="setState({expandedIndex:state.expandedIndex===${i}?null:${i}})"><div class="article-inner">
+        <div class="source-icon" style="background:${a.color}18;border:1px solid ${a.color}30">${a.icon}</div>
+        <div class="article-body">
+          <div class="article-meta">
+            <span class="meta-source" style="color:${a.color}">${escHtml(a.source)}</span>
+            <span class="meta-dot">·</span><span class="meta-time">${timeAgo(a.date)}</span>
+            <span class="meta-cat">${CATEGORIES[a.category]?.label||a.category}</span>
           </div>
+          <h3 class="article-title">${escHtml(mainTitle)}</h3>
+          ${showOriginTitle?`<p class="article-origin">${escHtml(a.title)}</p>`:""}
+          ${mainSnippet?`<p class="article-snippet">${escHtml(mainSnippet)}</p>`:""}
+          ${showOriginSnippet?`<p class="article-origin-snippet">${escHtml(a.snippet)}</p>`:""}
+          ${waiting?`<p class="translating-hint">⏳ 等待 AI 翻译中...</p>`:""}
+          ${exp?`<div class="article-actions">
+            <a class="btn-read" href="${escHtml(a.link)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">阅读原文 ↗</a>
+            <button class="btn-save ${saved?'saved':''}" onclick="event.stopPropagation();doSave(${i})">${saved?"★ 已收藏":"☆ 收藏"}</button>
+          </div>`:""}
         </div>
-      </div>`;
+      </div></div>`;
     });
-    html += `</div>`;
-
-    // Store filtered for save toggling
-    window.filtered_cache = filtered;
+    h+=`</div>`; window._filtered=filtered;
   }
 
-  // Sources panel
-  html += `
-    <div class="sources-panel">
-      <h3 class="sources-title">已订阅来源</h3>
-      <div class="sources-grid">
-        ${RSS_FEEDS.map(f => {
-          const s = feedStatus[f.name];
-          const statusClass = s?.ok ? "status-ok" : usingDemo ? "status-demo" : "status-fail";
-          return `<div class="source-item">
-            <span class="source-item-icon">${f.icon}</span>
-            <span class="source-item-name">${escHtml(f.name)}</span>
-            <span class="source-status ${statusClass}"></span>
-          </div>`;
-        }).join("")}
-      </div>
-    </div>`;
-
-  if (lastUpdated) {
-    html += `<div class="update-bar">上次更新：${lastUpdated.toLocaleString("zh-CN")} · 每次打开页面自动刷新</div>`;
-  }
-
-  html += `</div>`; // close content
-
-  document.getElementById("app").innerHTML = html;
+  h+=`<div class="sources-panel"><h3 class="sources-title">已订阅来源</h3><div class="sources-grid">${RSS_FEEDS.map(f=>{const s=feedStatus[f.name];const sc=s?.ok?"status-ok":usingDemo?"status-demo":"status-fail";return`<div class="source-item"><span class="source-item-icon">${f.icon}</span><span class="source-item-name">${escHtml(f.name)}</span><span class="source-status ${sc}"></span></div>`;}).join("")}</div></div>`;
+  if(lastUpdated) h+=`<div class="update-bar">上次更新：${lastUpdated.toLocaleString("zh-CN")} · 翻译结果已缓存，下次秒开</div>`;
+  h+=`</div>`;
+  document.getElementById("app").innerHTML=h;
 }
 
-// Fix save toggling - use filtered_cache
-window.toggleSave = function(article) {
-  if (!article) return;
-  toggleSave_inner(article);
+// ── Global ──
+window.doSave=function(fi){
+  const a=window._filtered?.[fi]; if(!a)return;
+  let s=[...state.savedArticles];
+  const x=s.findIndex(v=>v.link===a.link&&v.title===a.title);
+  if(x>=0)s.splice(x,1); else s.push({...a});
+  localStorage.setItem("hr_saved",JSON.stringify(s));
+  setState({savedArticles:s});
 };
-const toggleSave_inner = toggleSave;
-window.toggleSave = function(article) {
-  if (!article) return;
-  let saved = [...state.savedArticles];
-  const idx = saved.findIndex(a => a.link === article.link && a.title === article.title);
-  if (idx >= 0) saved.splice(idx, 1); else saved.push(article);
-  localStorage.setItem("hr_saved", JSON.stringify(saved));
-  setState({ savedArticles: saved });
+window.toggleTrans=function(){
+  const nv=!state.showChinese; setState({showChinese:nv});
+  if(nv&&!state.usingDemo&&state.articles.some(a=>!a.title_zh&&!isChinese(a.title))) translateAll();
 };
 
-// Boot
 fetchFeeds();
 </script>
 </body>
